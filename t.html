@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTS System</title>
+</head>
+<body>
+    <h1>TTS System</h1>
+    <input type="text" id="text-input" placeholder="Enter text here">
+    <button id="speak-button">Speak in Hausa</button>
+
+    <script>
+        // Get the input and button elements
+        const textInput = document.getElementById('text-input');
+        const speakButton = document.getElementById('speak-button');
+
+        // Add an event listener to the speak button
+        speakButton.addEventListener('click', () => {
+            // Get the text from the input element
+            const text = textInput.value.trim();
+
+            // Check if the text is not empty
+            if (text) {
+                // Create a new SpeechSynthesisUtterance object
+                const utterance = new SpeechSynthesisUtterance(text);
+
+                // Set the language and voice of the utterance
+                utterance.lang = 'ha'; // Hausa language code
+                utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'ha');
+
+                // Speak the utterance
+                speechSynthesis.speak(utterance);
+            }
+        });
+
+        speechSynthesis.addEventListener('voiceschanged', () => {
+            const voices = speechSynthesis.getVoices();
+            const hausaVoice = voices.find(voice => voice.lang === 'en');
+
+            if (hausaVoice) {
+                alert('Hausa voice is available');
+            } else {
+                alert('Hausa voice is not available');
+            }
+        });
+    </script>
+</body>
+</html>
